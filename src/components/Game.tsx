@@ -4,10 +4,16 @@ import deepcopy from "deepcopy";
 import { Board } from './Board';
 import { resolve } from 'dns';
 
+//Sort Random Func
 function shuffleArray(array: Array<object | string>) {
   return array.sort(() => .5 - Math.random());
 }
 
+//Random Number from Min to Max
+function randomInteger(min: number, max: number) {
+  let rand = min + Math.random() * (max + 1 - min);
+  return Math.floor(rand);
+}
 
 
 async function fetchPokemonData(url: string) {
@@ -16,19 +22,7 @@ async function fetchPokemonData(url: string) {
   return pokemonJson;
 }
 
-async function LoadPokemon() {
-  if (fetch) {
-    const pokemonData = await fetch("https://pokeapi.co/api/v2/pokemon-form?offset=20&limit=12");
-    const pokemon = await pokemonData.json();
-    const pokemonPage = pokemon.next;
-    const arrPokemon = await Promise.all(
-      pokemon.results.map(
-        async (onePokemon: any) => await fetchPokemonData(onePokemon.url)
-      )
-    );
-    return arrPokemon;
-  }
-}
+
 
 type GameProps = {
   string: string
@@ -39,27 +33,47 @@ export const Game = ({ string }: GameProps) => {
   const [pokemons, setPokemons] = useState([])
   const [loading, setLoading] = useState(false)
 
+  
   useEffect(() => {
-    async function noNameFun(): Promise<any> {
-
-      const pokemonData = await fetch("https://pokeapi.co/api/v2/pokemon-form?offset=20&limit=12")
+    async function loadPokemon(): Promise<any> {
+      //9
+      const pokemonData = await fetch(`https://pokeapi.co/api/v2/pokemon-form?offset=${randomInteger(50, 1000)}&limit=6`)
       const pokemon = await pokemonData.json();
-      const arrPokemon = await Promise.all(
+      const arrPokemons = await Promise.all(
         pokemon.results.map(
           async (onePokemon: any) => await fetchPokemonData(onePokemon.url)
         )
       );
+      let CopyArrPokemons = arrPokemons.slice()
+      let DoubleArrPokemon = arrPokemons.concat(CopyArrPokemons)
+      let NewPokemonArr: any = []
+      let varieble: any
+      for (varieble of DoubleArrPokemon) {
+        let obj = {
+          idPokemon: varieble.id,
+          name: varieble.name,
+          isFlipped: false,
+          canFlip: true,
+          id: uuid()
+        }
+        NewPokemonArr.push(obj)
+      }
 
-      return arrPokemon;
+      return shuffleArray(NewPokemonArr)
     }
 
-    noNameFun().then((arrPokemon) => {
+    loadPokemon().then((arrPokemon) => {
       setPokemons(arrPokemon)
       setLoading(!loading)
     })
 
 
   }, [])
+
+
+
+
+
 
 
   function onCardClick(card: Object) {

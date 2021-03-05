@@ -76,11 +76,6 @@ export const Game = ({ string }: GameProps) => {
 
 
 
-  function onCardClick(card: Object) {
-    console.log('onCardClickFun')
-  }
-
-
   if (loading == false) {
     return <p>...Loading...</p>
   }

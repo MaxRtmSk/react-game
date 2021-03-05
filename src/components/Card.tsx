@@ -11,12 +11,13 @@ type TestCard = {
   canFlip: boolean,
   isFlipped: boolean,
   name: string,
+  onClick: ((card:object) => {})
 }
 
-export const Card = ({img, isFlipped, name, id}:TestCard ) => {
+export const Card = ({img, isFlipped, name, id, onClick}:TestCard ) => {
 
   return (<div className="card-container">
-    <div className={"card" + (isFlipped ? " flipped" : "")} onClick={() => { }}>
+    <div className={"card" + (isFlipped ? " flipped" : "")} onClick={onClick}>
       <CardImge className="side front" src={img} />
       <CardImge className="side back" src={shirtPixel} />
     </div>

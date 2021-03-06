@@ -5,6 +5,7 @@ import { Game } from './components/Game';
 // import './components/Card.scss'
 import './components/Card.scss'
 import './components/Board.scss'
+import './components/PokemonSpinner.scss'
 
 function App() {
   return (

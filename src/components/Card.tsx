@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { CardImge } from './CardImge'
+
+import {CardFront} from './CardFront';
+import {CardShirt} from './CardShirt';
 
 import shirt from '../img/shirt.png'
 import shirtPixel from '../img/shirtPixel.png'
@@ -18,8 +20,8 @@ export const Card = ({img, isFlipped, name, id, onClick}:TestCard ) => {
 
   return (<div className="card-container">
     <div className={"card" + (isFlipped ? " flipped" : "")} onClick={onClick}>
-      <CardImge className="side front" src={img} />
-      <CardImge className="side back" src={shirtPixel} />
+      <CardFront className="side front" src={img} name={name}/>
+      <CardShirt className="side back" src={shirtPixel} />
     </div>
-  </div>);
+  </div>)
 }

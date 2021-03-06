@@ -3,6 +3,7 @@ import { v4 as uuid } from "uuid";
 import deepcopy from "deepcopy";
 import { Board } from './Board';
 import { resolve } from 'dns';
+import PokemonSpiner from './PokemonSpinner';
 
 //Sort Random Func
 function shuffleArray(array: Array<object | string>) {
@@ -37,7 +38,7 @@ export const Game = ({ string }: GameProps) => {
   useEffect(() => {
     async function loadPokemon(): Promise<any> {
       //9
-      const pokemonData = await fetch(`https://pokeapi.co/api/v2/pokemon-form?offset=${randomInteger(50, 1000)}&limit=6`)
+      const pokemonData = await fetch(`https://pokeapi.co/api/v2/pokemon-form?offset=${randomInteger(50, 867)}&limit=6`)
       const pokemon = await pokemonData.json();
       const arrPokemons = await Promise.all(
         pokemon.results.map(
@@ -77,7 +78,7 @@ export const Game = ({ string }: GameProps) => {
 
 
   if (loading == false) {
-    return <p>...Loading...</p>
+    return <PokemonSpiner/>
   }
 
   return (

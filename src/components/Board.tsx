@@ -124,7 +124,8 @@ export const Board = ({ pokemons }: BoardProps) => {
         onClick={() => onCardClick(pokemon)}
         isFlipped={pokemon.isFlipped}
         key={pokemon.id}
-        img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.idPokemon}.png`}
+        // img={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.idPokemon}.png`}
+        img={`https://www.serebii.net/pokemongo/pokemon/${pokemon.idPokemon}.png`}
         {...pokemon}
       />)
     })}

@@ -1,10 +1,10 @@
-import { error } from "console";
 import { useEffect, useState } from "react";
 import { Card } from "./Card"
-
+import s from './Board.module.scss'
 
 type BoardProps = {
-  pokemons: Array<any>
+  pokemons: Array<any>,
+  loading: boolean
 }
 
 interface pokemonsPropsTypes {
@@ -22,9 +22,10 @@ interface firstCard {
   id: number | null,
 }
 
-export const Board = ({ pokemons }: BoardProps) => {
+export const Board = ({ pokemons, loading}: BoardProps) => {
   const [pokemonsProps, setPokemonsProps] = useState<Array<pokemonsPropsTypes>>(pokemons)
-  const [canFlipBoard, setCanFlipBoard] = useState<boolean | null>(false);
+  const [canClickBoard, setCanClickBoard] = useState<boolean | null>(false);
+  const [colorBoard, setColorBoard] = useState(s.grey)
 
   const [firstCard, setFirstCard] = useState<firstCard>({
     idPokemon: null,
@@ -35,16 +36,16 @@ export const Board = ({ pokemons }: BoardProps) => {
     id: null,
   });
 
-  const [twoCard, setTwocard] = useState(false)
+  const [twoCard, setTwocard] = useState<boolean>(()=>false)
 
-  function setCardIsFlipped(CardID: any, isFlipped: any) {
+  function setCardIsFlipped(CardID: any, isFlipped: any, canFlip:boolean) {
     setPokemonsProps(
       (prev: any): any => {
         return (prev.map((c: any): any => {
           if (c.id !== CardID) {
             return c
           };
-          return { ...c, isFlipped };
+          return { ...c, isFlipped, canFlip};
         })
         )
       })
@@ -55,17 +56,20 @@ export const Board = ({ pokemons }: BoardProps) => {
       let index = 0;
 
       pokemonsProps.forEach((pokemon: any) => {
-        setTimeout(() => setCardIsFlipped(pokemon.id, true), index++ * 100);
+        setTimeout(() => setCardIsFlipped(pokemon.id, true, true), index++ * 100);
       });
-      setTimeout(() => setCanFlipBoard(true), pokemonsProps.length * 100);
+      setTimeout(() => setCanClickBoard(true), pokemonsProps.length * 100);
     }, 3000);
   }, [])
 
 
   useEffect(()=>{
-    setTimeout(() => {
+    {firstCard.idPokemon !== secondCard.idPokemon ? setColorBoard(s.red):setColorBoard(s.green)}
+    setCanClickBoard(false)
+    setTimeout(() => {  
       if (firstCard.idPokemon !== secondCard.idPokemon) {
         Lose()
+        ResetCard()
         return
       }
       if (firstCard.idPokemon == secondCard.idPokemon) {
@@ -75,9 +79,8 @@ export const Board = ({ pokemons }: BoardProps) => {
   },[twoCard])
 
   function Lose() {
-    setCardIsFlipped(firstCard.id, true)
-    setCardIsFlipped(secondCard.id, true)
-    ResetCard()
+    setCardIsFlipped(firstCard.id, true, true)
+    setCardIsFlipped(secondCard.id, true, true)
   }
 
   function ResetCard(){
@@ -89,16 +92,20 @@ export const Board = ({ pokemons }: BoardProps) => {
       idPokemon: null,
       id: null,
     })
+    setCanClickBoard(true)
   }
 
-  function onCardClick({ idPokemon, id, canFlip, isFlipped }: any) {
-    if (!canFlipBoard)
-      return;
-    if (!canFlip)
-      return;
 
+  function onCardClick({ idPokemon, id, canFlip, isFlipped }: any) {
+    if (!canClickBoard)
+      return;
+    if (!canFlip){
+      alert('you chose this card')
+      return;
+    }
+      
     if (isFlipped == true) {
-      setCardIsFlipped(id, false)
+      setCardIsFlipped(id, false, false)
     }
 
     if (firstCard.id == null) {
@@ -114,11 +121,10 @@ export const Board = ({ pokemons }: BoardProps) => {
       })
       setTwocard(!twoCard)
     }
-
-    
   }
 
-  return (<div className={"board-container" + (canFlipBoard ? "" : " blockBoard")}>
+
+  return (<div className={s.boardContainer + (canClickBoard ? "" : ` ${s.blockBoard} ${colorBoard}`)}>
     {pokemonsProps.map((pokemon: any) => {
       return (<Card
         onClick={() => onCardClick(pokemon)}

@@ -1,10 +1,8 @@
-.pokemonSpiner-container {
+.container {
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 50%;
 }
 
 .pokemonSpiner {
@@ -13,8 +11,8 @@
   width: 100px;
   background: linear-gradient(to bottom, rgb(254, 0, 1) 50%, white 50% );
   border-radius: 50%;
-  border: 8px solid black;
   animation: spin 1s linear infinite;
+  box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.30);
 }
 
 

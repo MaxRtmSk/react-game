@@ -6,7 +6,7 @@ import {CardShirt} from './CardShirt';
 import shirt from '../img/shirt.png'
 import shirtPixel from '../img/shirtPixel.png'
 
-type TestCard = {
+type CardProps = {
   img: string,
   idPokemon: number,
   id: number,
@@ -16,7 +16,7 @@ type TestCard = {
   onClick: ((card:object) => {})
 }
 
-export const Card = ({img, isFlipped, name, id, onClick}:TestCard ) => {
+export const Card = ({img, isFlipped, name, id, onClick}:CardProps ) => {
 
   return (<div className="card-container">
     <div className={"card" + (isFlipped ? " flipped" : "")} onClick={onClick}>

@@ -4,13 +4,13 @@ import { Game } from './components/Game';
 
 // import './components/Card.scss'
 import './components/Card.scss'
-import './components/Board.scss'
-import './components/PokemonSpinner.scss'
+import { Footer } from './components/Footer';
 
 function App() {
   return (
     <div className="App">
       <Game string={'String'}/>
+      <Footer/>
     </div>
   );
 }

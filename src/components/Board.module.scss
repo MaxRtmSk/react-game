@@ -1,9 +1,13 @@
 .boardContainer {
-  display: grid;
-  grid-gap: 16px;
+  display: flex;
   margin: 96px;
-  grid-template-columns: repeat(6, auto);
-  grid-template-rows: repeat(6, auto);
+  min-height: 500px;
+  max-width: 1000px;
+  flex-wrap: wrap;
+  margin: auto auto;
+  justify-content: center;
+  border-radius: 20px;
+  
 }
 
 .blockBoard {

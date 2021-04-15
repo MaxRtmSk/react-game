@@ -1,7 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 
-export const CardShirt = ({ src, alt = "", style = {}, className = "", ...props }: any) => {
+
+export const CardShirt = ({ src, alt = "", className = "", ...props }: any) => {
   return (
-    <img alt={alt} style={style} className={className} src={src} />);
-}
+    <div
+      style={{
+        backgroundImage: "url(" + src + ")",
+        backgroundSize: "cover"
+      }}
+      className={className}
+    />
+  );
+};

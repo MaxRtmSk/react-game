@@ -1,26 +1,28 @@
 .card-container {
-  max-width:100%;
+  margin: 5px;
+  max-width:160px;
+  
 }
 
 .card {
+  
+  // min-width:160px;
+  padding: 15px;
+  background-color: blanchedalmond;
   transition: transform 0.8s, box-shadow 0.2s, border-color 0.2s;
   transform-style: preserve-3d;
   position: relative;
   text-align: center;
   border: solid;
-
+  border-radius: 10px;
+  box-shadow: 4px 4px 5px 0px rgb(0 0 0 / 71%), inset 1px 1px 7px 3px rgb(0 0 0 / 35%);
 
   .side {
     backface-visibility: hidden;
   }
 
-  img {
-    width: 100%;
-    height: 100%;
-  }
-
   .front {
-    background-color: gray;
+   
   }
 
   .back {
@@ -36,4 +38,14 @@
 
 .flipped {
   transform: rotateY(180deg);
+
+}
+
+.card-img-block{
+  // width: 100%;
+  // background: url(https://i.imgur.com/FbIpTsq.png);
+  // background-size: cover;
+  
+  // border: 5px solid n;
+
 }

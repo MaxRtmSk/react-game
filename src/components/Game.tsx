@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import PokemonSpiner from "./PokemonSpinner"
 import { v4 as uuid } from "uuid";
 import deepcopy from "deepcopy";
 import { Board } from "./Board";
 import { Menu } from "./Menu";
-import { resolve } from "dns";;
-
-
+import { resolve } from "dns";
+import s from "./Game.module.scss";
+import PokemonSpiner from "./PokemonSpinner";
+import close from "../img/close.png"
+import reset from "../img/reset.png"
 
 //Sort Random Func
 function shuffleArray(array: Array<object | string>) {
@@ -34,8 +35,7 @@ export const Game = ({ string }: GameProps) => {
   const [gameStart, setGameStart] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
-  function start(){
+  function start() {
     async function loadPokemon(): Promise<any> {
       const pokemonData = await fetch(
         `https://pokeapi.co/api/v2/pokemon-form?offset=${randomInteger(
@@ -69,16 +69,30 @@ export const Game = ({ string }: GameProps) => {
 
     loadPokemon().then((arrPokemon) => {
       setPokemons(arrPokemon);
-      setGameStart(true)
+      setGameStart(true);
       setLoading(!loading);
     });
   }
 
 
+
   return (
-    <div>
-      <Menu onClick={start}/>
-      {loading ? <Board pokemons={pokemons} loading={loading}/> : <PokemonSpiner />}
+    <div className={s.wrapper}>
+      {loading ? (
+        <Board pokemons={pokemons} loading={loading} />
+      ) : (
+        <Menu onClick={start} />
+      )}
+      <div className={s.buttonsGame}>
+        <button style={{backgroundImage: 'url(' + close + ')'}} ></button>
+        <button style={{backgroundImage: 'url(' + reset + ')'}} ></button>
+        <button style={{backgroundImage: 'url(' + close + ')'}} ></button>
+      </div>
+      {/* {loading ? (
+        <Board pokemons={pokemons} loading={loading} />
+      ) : (
+        <PokemonSpiner />
+      )} */}
     </div>
   );
 };
